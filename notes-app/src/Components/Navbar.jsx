@@ -5,7 +5,7 @@ import LogoVideo from './LogoVideo';
 
 const Navbar = () => {
   return (
-    <div className='sticky top-0 z-10 bg-white'>
+    <div className='sticky top-0 z-50 bg-white'>
       <nav className='flex flex-row justify-around items-center shadow-lg'>
         <div className="logo">
             <LogoVideo/>

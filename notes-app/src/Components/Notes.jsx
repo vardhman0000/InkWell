@@ -1,92 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Notes.css';
 import sort from '../assets/sort.png'
 import filter from '../assets/filter.png'
 import search from '../assets/search.png'
 
 const Notes = () => {
+    let [hidden, setHidden] = useState(false)
+    const toggleAddNote = () => { 
+        setHidden(!hidden)
+    }
+    
     useEffect(() => {
-    //     const notesContainer = document.getElementById("app");
-    //     const addNoteButton = notesContainer.querySelector(".add-note");
+        const plusIcon = document.querySelector(".plusIcon");
+        const crossIcon = document.querySelector(".crossIcon");
 
-    //     const getNotes = () => {
-    //         return JSON.parse(localStorage.getItem("stickynotes-notes") || "[]");
-    //     };
+        const handleClick = () => {
+            toggleAddNote();
+        };
 
-    //     const saveNotes = (notes) => {
-    //         localStorage.setItem("stickynotes-notes", JSON.stringify(notes));
-    //     };
+        if (plusIcon) {
+            plusIcon.addEventListener('click', handleClick);
+        }
 
-    //     const createNoteElement = (id, content) => {
-    //         const element = document.createElement("textarea");
-    //         element.classList.add("note");
-    //         element.value = content;
-    //         element.placeholder = "Empty Sticky Note";
-    //         element.addEventListener("change", () => {
-    //             updateNote(id, element.value);
-    //         });
+        if (crossIcon) {
+            crossIcon.addEventListener('click', handleClick);
+        }
 
-    //         element.addEventListener("dblclick", () => {
-    //             const doDelete = confirm(
-    //                 "Are you sure you wish to delete this sticky note?"
-    //             );
-
-    //             if (doDelete) {
-    //                 deleteNote(id, element);
-    //             }
-    //         });
-
-    //         return element;
-    //     };
-
-    //     const addNote = () => {
-    //         const notes = getNotes();
-
-    //         const noteObject = {
-    //             id: Math.floor(Math.random() * 100000),
-    //             content: "",
-    //         };
-
-    //         const noteElement = createNoteElement(noteObject.id, noteObject.content);
-    //         notesContainer.insertBefore(noteElement, addNoteButton);
-
-    //         notes.push(noteObject);
-    //         saveNotes(notes);
-    //     };
-
-    //     const updateNote = (id, newContent) => {
-    //         const notes = getNotes();
-    //         const targetNote = notes.find((note) => note.id === id);
-
-    //         if (targetNote) {
-    //             targetNote.content = newContent;
-    //             saveNotes(notes);
-    //         }
-    //     };
-
-    //     const deleteNote = (id, element) => {
-    //         const notes = getNotes().filter((note) => note.id !== id);
-
-    //         saveNotes(notes);
-    //         notesContainer.removeChild(element);
-    //     };
-
-    //     getNotes().forEach((note) => {
-    //         const noteElement = createNoteElement(note.id, note.content);
-    //         notesContainer.insertBefore(noteElement, addNoteButton);
-    //     });
-
-    //     addNoteButton.addEventListener("click", addNote);
-
-    //     return () => {
-    //         addNoteButton.removeEventListener("click", addNote);
-    //     };
-
-        let sortEle = document.querySelector(".sortDiv");
-            console.log(`sortEle : ${sortEle.classList}`)
-            sortEle.addEventListener("click", () => { 
-        })
-    }, []);
+        return () => {
+            if (plusIcon) {
+                plusIcon.removeEventListener('click', handleClick);
+            }
+            if (crossIcon) {
+                crossIcon.removeEventListener('click', handleClick);
+            }
+        };
+    }, [hidden]);
 
     
 
@@ -141,21 +89,6 @@ const Notes = () => {
 
             </div>
 
-            {/* <div id="app">
-                <button className="add-note" type="button">+</button>
-            </div> */}
-
-            {/* <div className='NoteCard m-10'>
-                <div className='contentArea border-2 w-52 p-4'>
-                    <h2 className=''>
-                        <textarea name="" id="" cols="18" rows="1" placeholder='Title' className='border-b-2 '></textarea>
-                    </h2>
-                    <p>
-                        <textarea name="" id="" cols="18" rows="10" placeholder='Note Here...'></textarea>
-                    </p>
-                </div>
-            </div> */}
-
             <div className="wrapper relative">
 
                 <div className="takeInput flex justify-center m-5">
@@ -165,50 +98,204 @@ const Notes = () => {
                     <button className='text-white'>+</button>
                 </div>
 
-                <section className='pinned border-black border-2 m-5 rounded-lg'>
+                <section className='pinned m-5 rounded-lg'>
+
                     <h3 className='m-5'>
                         PINNED
                     </h3>
-                    <div className='cardContainer'>
-                        <div className='NoteCard m-10'>
-                            <div className='contentArea border-2 w-52 p-4'>
-                                <h2 className=''>
-                                    <textarea name="" id="" cols="18" rows="1" placeholder='Title' className='border-b-2 '></textarea>
-                                </h2>
-                                <p>
-                                    <textarea name="" id="" cols="18" rows="10" placeholder='Note Here...'></textarea>
+                    <div className="cardContainer w-[90vw] mx-auto columns-4 gap-x-10">
+
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.
                                 </p>
                             </div>
                         </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, quibusdam!
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
+                    
                 </section>
 
-                <section className='others border-black border-2 m-5 rounded-lg'>
+                <section className='others m-5 rounded-lg'>
+
                     <h3 className='m-5'>
                         OTHERS
                     </h3>
-                    <div className="cardContainer">
-                        <div className='NoteCard m-10'>
-                            <div className='contentArea border-2 w-52 p-4'>
-                                <h2 className=''>
-                                    <textarea name="" id="" cols="18" rows="1" placeholder='Title' className='border-b-2 '></textarea>
-                                </h2>
-                                <p>
-                                    <textarea name="" id="" cols="18" rows="10" placeholder='Note Here...'></textarea>
+                    <div className="cardContainer w-[90vw] mx-auto md:columns-4 columns-1 gap-x-10">
+
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.
                                 </p>
                             </div>
                         </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, quibusdam!
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit explicabo, nihil deserunt sit consequatur deleniti quos. Dolores labore nisi fugit?
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet blanditiis itaque accusamus excepturi temporibus, quas omnis sunt architecto quos culpa accusantium harum, at deserunt? Repellat?
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit reprehenderit architecto magni, nulla vero repellendus beatae incidunt laudantium laborum eligendi. Provident itaque sequi, minima odio, eveniet ad perspiciatis facere vel fugit exercitationem tenetur officia maiores!
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas harum ullam cupiditate dicta in quod debitis fugit est deserunt ipsa dolorum, delectus corrupti! Error voluptatibus reprehenderit voluptatem? Suscipit, iste ipsa. Obcaecati, quidem doloremque ipsa dolorum voluptatum quasi illum numquam necessitatibus.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, doloremque? Lorem ipsum dolor sit amet. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, beatae.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center justify-between">
+                                <h3 class="title text-xl font-bold text-gray-900">
+                                    IMP Concepts in Pipeline
+                                </h3>
+                            </div>
+                            <div class="mt-4">
+                                <p class="content text-gray-700 ">
+                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, consectetur. Perspiciatis consectetur consequatur magnam non quidem culpa incidunt fugit, repellendus recusandae, temporibus voluptates adipisci voluptas aut id reiciendis veritatis odit omnis officiis laudantium error, ipsum ullam rerum exercitationem? Atque voluptatem exercitationem consectetur, quae ullam provident sapiente excepturi ipsum doloribus repellat autem consequuntur? Maiores excepturi repudiandae placeat quis tempora, blanditiis aliquid.
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
+                    
                 </section>
             </div>
-            <div class="bg-gray-100 p-4 rounded-md shadow-sm w-48 h-64 m-5 text-ellipsis">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-xl font-bold text-gray-900">IMP Concepts in Pipeline</h3>
+
+            {hidden && (<div className="addNote z-10 h-[100vh] w-[100vw] bg-black absolute top-0 left-0 flex justify-center items-center">
+                <div className="addContainer relative flex flex-col items-center p-10 opacity-100 z-40 bg-red-500 h-[40vh] w-[40vw] border-black border-4 shadow-2xl shadow-black">
+                    <div className="crossIcon flex justify-center items-center text-white absolute top-2 right-2 w-10 h-10 border-black border-2">
+                        <button className='text-3xl p-2'>X</button>
+                    </div>
+                    <div>
+                        Title Here
+                    </div>
+                    <div>
+                        Add a Note ...
+                    </div>
                 </div>
-                <div class="mt-4">
-                    <p class="text-gray-700">IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.</p>
-                </div>
-            </div>
+            </div>)}
+            
+
+
+
         </>
     );
 };
