@@ -33,3 +33,14 @@
 .add-note:hover {
     background: rgba(0, 0, 0, 0.2);
 } */
+
+.settings .menu {
+    transform: scale(0);
+    opacity: 0;
+    transform-origin: bottom right;
+    transition: all 0.3s ease-in;
+}
+.settings:hover .menu {
+    opacity: 1;
+    transform: scale(1);
+}

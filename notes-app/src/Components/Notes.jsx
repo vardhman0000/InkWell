@@ -3,6 +3,9 @@ import './Notes.css';
 import sort from '../assets/sort.png'
 import filter from '../assets/filter.png'
 import search from '../assets/search.png'
+import menu from '../assets/menu.png'
+import edit from '../assets/edit.png'
+import deleteIcon from '../assets/deleteIcon.png'
 
 const Notes = () => {
     let [hidden, setHidden] = useState(false)
@@ -105,30 +108,57 @@ const Notes = () => {
                     </h3>
                     <div className="cardContainer w-[90vw] mx-auto columns-4 gap-x-10">
 
-                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
-                            <div class="flex items-center justify-between">
-                                <h3 class="title text-xl font-bold text-gray-900">
-                                    IMP Concepts in Pipeline
+                        <div className="noteCard bg-gray-100 p-4 rounded-lg shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center">
+                                <h3 class="title text-2xl font-bold text-gray-900">
+                                    This is a Title
                                 </h3>
                             </div>
                             <div class="mt-4">
                                 <p class="content text-gray-700 ">
-                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication.
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur odit impedit sit repellat nemo rerum iusto molestias eius, dicta similique? Neque fugiat dolore possimus a eveniet cupiditate doloremque minus animi corrupti dolorum! Quidem voluptatem ullam cum, non alias sunt dolore ducimus illo eaque tenetur, consequatur recusandae consectetur laboriosam maiores quis.
                                 </p>
                             </div>
+                            <hr className='h-[2px] my-2 bg-slate-400'/>
+                            <div className="bottom-content flex flex-row justify-between">
+                                <div className="date text-slate-500">
+                                    April 17, 2024
+                                </div>
+                                <div className="settings flex justify-center items-center px-1 cursor-pointer relative">
+                                    <img src={menu} alt="MORE" className='w-4 opacity-50' />
+                                    <ul className="menu absolute bottom-7 -right-1 shadow-xl bg-white w-[100px] rounded-md">
+                                        <li className='flex flex-start items-center m-1 cursor-pointer hover:bg-slate-200 py-1 rounded-md'><img src={edit} alt="" className='h-4 px-2'/>Edit</li>
+                                        <li className='flex flex-start items-center m-1 cursor-pointer hover:bg-slate-200 py-1 rounded-md'><img src={deleteIcon} alt="" className='h-4 px-2'/>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div className="noteCard bg-gray-100 p-4 rounded-2xl shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
-                            <div class="flex items-center justify-between">
-                                <h3 class="title text-xl font-bold text-gray-900">
-                                    IMP Concepts in Pipeline
+                        <div className="noteCard bg-gray-100 p-4 rounded-lg shadow-sm w-[22vw] mb-5 break-inside-avoid border-2 border-black">
+                            <div class="flex items-center">
+                                <h3 class="title text-2xl font-bold text-gray-900">
+                                    This is a Title
                                 </h3>
                             </div>
                             <div class="mt-4">
                                 <p class="content text-gray-700 ">
-                                    IMP Concepts in Pipeline is a series of technologies that are used in the construction and operation of pipelines. These technologies include port forwarding, DNS snooping, ARP snooping, port forwarding with nglog, daisy chaining, DMARC compliance in email authentication. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, quibusdam!
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur odit impedit sit repellat nemo rerum iusto molestias eius, dicta similique? Neque fugiat dolore possimus a eveniet cupiditate doloremque minus animi corrupti dolorum! Quidem voluptatem ullam cum, non alias sunt dolore ducimus illo eaque tenetur, consequatur recusandae consectetur laboriosam maiores quis. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi nisi id inventore autem architecto? Quaerat nobis recusandae suscipit dolorum pariatur maxime culpa corporis nulla maiores, non reprehenderit atque accusamus facere.
                                 </p>
                             </div>
+                            <hr className='h-[2px] my-2 bg-slate-400'/>
+                            <div className="bottom-content flex flex-row justify-between">
+                                <div className="date text-slate-500">
+                                    April 18, 2024
+                                </div>
+                                <div className="settings flex justify-center items-center px-1 cursor-pointer relative">
+                                    <img src={menu} alt="MORE" className='w-4 opacity-50' />
+                                    <ul className="menu absolute bottom-7 -right-1 shadow-xl bg-white w-[100px] rounded-md">
+                                        <li className='flex flex-start items-center m-1 cursor-pointer hover:bg-slate-200 py-1 rounded-md'><img src={edit} alt="" className='h-4 px-2'/>Edit</li>
+                                        <li className='flex flex-start items-center m-1 cursor-pointer hover:bg-slate-200 py-1 rounded-md'><img src={deleteIcon} alt="" className='h-4 px-2'/>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+                        
 
                     </div>
                     
