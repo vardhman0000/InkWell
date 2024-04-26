@@ -34,13 +34,50 @@
     background: rgba(0, 0, 0, 0.2);
 } */
 
-.settings .menu {
+/* .settings .settings-menu-list {
     transform: scale(0);
     opacity: 0;
     transform-origin: bottom right;
     transition: all 0.3s ease-in;
 }
-.settings:hover .menu {
+.settings:hover .settings-menu-list {
     opacity: 1;
     transform: scale(1);
+} */
+
+.noteCard .pinHollow,
+.noteCard .add-image,
+.noteCard .editBtn,
+.noteCard .deleteBtn {
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
 }
+/* Remove the hover effect and set opacity to 1 for pin2 when pinned */
+.noteCard .pinHollow.pinned {
+    opacity: 1;
+}
+.noteCard:hover .pinHollow,
+.noteCard:hover .add-image,
+.noteCard:hover .editBtn,
+.noteCard:hover .deleteBtn{
+    opacity: 1;
+}
+
+.pinFilled {
+    opacity: 0;
+}
+.pinIcon:hover {
+    opacity: 0;
+}
+.pinHollow:hover .pinFilled {
+    opacity: 0.4;
+}
+/* .delContainer {
+    opacity: 50%;
+    backdrop-filter: blur(20px);
+} */
+
+/* .show {
+    opacity: 1;
+    pointer-events: auto;
+} */

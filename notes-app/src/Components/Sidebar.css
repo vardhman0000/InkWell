@@ -1,0 +1,21 @@
+.titleCells {
+    background-color: azure;
+    padding: 10px;
+    border: black solid 1px;
+    border-radius: 0px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #717070;
+    border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #9b9b9b;
+}
+::-webkit-scrollbar-track {
+    background-color: #d4d4d4;
+    border-radius: 6px;
+}
