@@ -10,8 +10,10 @@ import cross from '../assets/cross.png'
 import pin1 from '../assets/pin1.png'
 import pin2 from '../assets/pin2.png'
 import addImage2 from '../assets/addImage2.png'
-
-
+import noteBg3 from '../assets/noteBg3.png'
+import noteBg4 from '../assets/noteBg4.png'
+import noteBg5 from '../assets/noteBg5.png'
+import removeBg from '../assets/removeImage.png'
 
 import Sidebar from './Sidebar';
 
@@ -180,7 +182,29 @@ const Notes = () => {
                     <div class="bottom-content flex flex-row justify-between">
                         <div class="date text-slate-500">${note.date}</div>
                         <div class="settings flex justify-center items-center px-1 cursor-pointer relative">
-                            <img src=${addImage2} alt="" class="add-image h-5 px-2"/>
+                            <div class="imageIcon">
+                                <img src=${addImage2} alt="" class="add-image h-5 px-2 relative"/>
+
+                                <ul class="imageList absolute top-[-65px] left-[-30%] p-2 flex flex-row gap-x-2 rounded-lg bg-white h-15 overflow-hidden border-black border-2" >
+
+                                    <li class="overflow-hidden border-2 border-black rounded-md hover:scale-110 w-6 flex items-center justify-center">
+                                        <img class="w-5 rounded-sm" src=${removeBg} />
+                                    </li>
+
+                                    <li class="overflow-hidden border-2 border-black rounded-md hover:scale-110 w-auto">
+                                        <img class="h-10 rounded-sm" src=${noteBg3} />
+                                    </li>
+
+                                    <li class="overflow-hidden border-2 border-black rounded-md hover:scale-110 w-auto">
+                                        <img class="h-10 rounded-sm" src=${noteBg4} />
+                                    </li>
+
+                                    <li class="overflow-hidden border-2 border-black rounded-md hover:scale-110 w-auto">
+                                        <img class="h-10 rounded-sm" src=${noteBg5} />
+                                    </li>
+
+                                </ul>
+                            </div>
                             <img src=${edit} alt="" class="editBtn h-5 px-2"/>
                             <img src=${deleteIcon} alt="" class="deleteBtn h-5 px-2"/>
                         </div>
@@ -188,6 +212,41 @@ const Notes = () => {
                 `;
         
                 otherContainer.appendChild(noteCard);
+
+
+                const imageList = noteCard.querySelector('.imageList');
+                // Add event listener to each image in the imageList
+                imageList.querySelectorAll('img').forEach((img, imgIndex) => {
+                    img.addEventListener('click', () => {
+                        // Check if it's the first image being clicked
+                        if (imgIndex === 0) {
+                            // If it's the first image, set background color in local storage
+                            localStorage.setItem('backgroundColor', 'bg-gray-100');
+                            // Remove background image
+                            noteCard.style.backgroundImage = 'none';
+                            // Apply background color
+                            noteCard.classList.add('bg-gray-100');
+                        } else {
+                            // If it's not the first image, get the source URL of the clicked image
+                            const imageUrl = img.getAttribute('src');
+                            // Store the background image URL in local storage
+                            localStorage.setItem('backgroundImage', imageUrl);
+                            // Set background image with 70% opacity
+                            noteCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${imageUrl})`;
+                            // Remove any background color
+                            noteCard.classList.remove('bg-gray-100');
+                        }
+                    });
+                });
+
+                // // Inside the showNotes function, after creating the noteCard element
+                // // Retrieve the background image URL from local storage
+                // const backgroundImageUrl = localStorage.getItem('backgroundImage');
+                // if (backgroundImageUrl) {
+                //     // Apply the background image to the note card
+                //     noteCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${backgroundImageUrl})`;
+                // }
+
 
                 const pinHollow = noteCard.querySelector(".pinHollow")
                 pinHollow.addEventListener('click', () => { 
@@ -310,7 +369,7 @@ const Notes = () => {
 
             <div className="wrapper relative">
 
-                <div className='plusIcon bg-black w-16 h-16 rounded-xl fixed right-16 bottom-16 flex justify-center items-center text-5xl shadow-2xl shadow-slate-500'>
+                <div className='plusIcon bg-black w-16 h-16 rounded-xl fixed right-16 bottom-16 flex justify-center items-center text-5xl shadow-2xl shadow-slate-500 z-50'>
                     <button className='text-white'>+</button>
                 </div>
 

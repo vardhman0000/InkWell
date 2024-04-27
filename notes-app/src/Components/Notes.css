@@ -81,3 +81,14 @@
     opacity: 1;
     pointer-events: auto;
 } */
+
+.imageIcon .imageList {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: bottom;
+    transition: all 0.2s ease-in-out;
+}
+.imageIcon:hover .imageList {
+    opacity: 1;
+    transform: scale(1);
+}
