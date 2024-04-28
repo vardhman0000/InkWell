@@ -12,7 +12,7 @@ const Navbar = () => {
             {/* <img className='w-48' src={logo} alt="" /> */}
         </div>
         <div className=''>
-            <ul className='flex flex-row gap-x-5'>
+            <ul className='hidden md:flex md:flex-row md:gap-x-5'>
                 <Link className='font-semibold px-5 py-4 text-lg' to="/">Home</Link>
                 <Link className='font-semibold px-5 py-4 text-lg' to="/Notes">Notes</Link>
                 <Link className='font-semibold px-5 py-4 text-lg' to="/">About Us</Link>
