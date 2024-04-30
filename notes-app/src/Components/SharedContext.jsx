@@ -17,7 +17,7 @@ const NotesProvider = ({ children }) => {
 
     return (
         <NotesContext.Provider value={{ notes, updateNoteTitle }}>
-        {children}
+            {children}
         </NotesContext.Provider>
     );
 };

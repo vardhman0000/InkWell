@@ -1,3 +1,8 @@
+import ui from '../../assets/ui.jpeg'
+import { Link } from 'react-router-dom'
+
+
+
 export default function CTA() {
         return (
         <div className="bg-white">
@@ -23,15 +28,15 @@ export default function CTA() {
                     Start using our app today.
                 </h2>
                 <p className="mt-6 text-lg leading-8 text-gray-300">
-                    Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
+                Keep your notes up to date effortlessly with our push-to-deploy feature. Instantly sync changes across all your devices, ensuring you're always in sync.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                    <a
-                    href="#"
+                <Link
+                    to="/Notes"
                     className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                    >
+                >
                     Get started
-                    </a>
+                </Link>
                     <a href="#" className="text-sm font-semibold leading-6 text-white">
                     Learn more <span aria-hidden="true">→</span>
                     </a>
@@ -40,7 +45,7 @@ export default function CTA() {
                 <div className="relative mt-16 h-80 lg:mt-8">
                 <img
                     className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-                    src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+                    src={ui}
                     alt="App screenshot"
                     width={1824}
                     height={1080}
@@ -51,3 +56,4 @@ export default function CTA() {
         </div>
         )
     }
+

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
+import { Link } from 'react-router-dom'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -77,12 +78,13 @@ export default function HeroSection() {
                 Simplify your note-taking, organize effortlessly, and succeed in all your endeavors with our streamlined platform
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                    href="#"
+                <Link
+                    to="/Notes"
                     className="rounded-md bg-orange-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
                 >
                     Get started
-                </a>
+                </Link>
+
                 <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
                     Learn more <span aria-hidden="true">→</span>
                 </a>

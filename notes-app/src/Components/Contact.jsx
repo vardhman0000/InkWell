@@ -1,4 +1,5 @@
 import React from 'react';
+import Test from '../Test';
 
 const Contact = () => {
   return (
@@ -15,7 +16,8 @@ const Contact = () => {
               marginHeight="0"
               marginWidth="0"
               scrolling="no"
-              src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=%C4%B0zmir+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+              // src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=%C4%B0zmir+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+              src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13761.932897700675!2d76.6572029!3d30.5160865!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x81b346dee91799ca!2sChitkara%20University!5e0!3m2!1sen!2sin!4v1649231525621!5m2!1sen!2sin'
               style={{
                 filter: 'grayscale(1) contrast(1.2) opacity(0.4)'
               }}
@@ -53,6 +55,10 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      <div className="section test">
+        <Test/>
+      </div>
     </div>
   );
 }
