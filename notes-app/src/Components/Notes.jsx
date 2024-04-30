@@ -19,25 +19,27 @@
     import Sidebar from './Sidebar';
 
     const Notes = () => {
-
+        
         const [notes, setNotes] = useState([]);
         const [sortBy, setSortBy] = useState('');
         let [noteAdd, setNoteAdd] = useState(false);
-        const [cardCount, setCardCount] = useState(0);
-
+        
         const [searchQuery, setSearchQuery] = useState(''); 
-
+        
         const [showWrapper, setShowWrapper] = useState(true);
 
         const [hidePinned, setHidePinned] = useState(true);
-
+        
         const [hideAppear, setHideAppear] = useState(true);
-
+        
+        const [noteCount, setNoteCount] = useState(0);
+        
+        const storedNotes = JSON.parse(localStorage.getItem("notes") || "[]");
+        const [cardCount, setCardCount] = useState(storedNotes.length);
 
         useEffect(() => {
-            // Function to fetch notes from local storage and set state
-            const storedNotes = JSON.parse(localStorage.getItem("notes") || "[]");
             setNotes(storedNotes);
+            setNoteCount(storedNotes.length); 
         }, []);
         
         
@@ -86,6 +88,8 @@
 
             
             function pinCard(noteCard){
+
+                
                 const pinnedSection = document.querySelector(".pinnedContainer .cardContainer");
                 const pinFilled = noteCard.querySelector(".pinFilled");
             
@@ -100,24 +104,12 @@
                     pinFilled.classList.add("opacity-100");
                     noteCard.classList.add("pinnedTrue");
                 }
-            
-                // Remove the card from the "Others" section
-                // otherContainer.removeChild(noteCard);
 
                 const pinnedCards = document.querySelectorAll(".pinnedTrue");
                 console.log(pinnedCards.length)
 
                 setHideAppear(pinnedCards.length === 0) // yeh much better hai below written code se
-
-                // if(pinnedCards.length > 0){
-                //     appearHere.classList.add("hidden")
-                // }
-                // if(pinnedCards.length < 0) {
-                //     appearHere.classList.remove("hidden")
-                // }
             
-                // Update the pinned state
-                // setPinned(!pinned);
 
             }
 
@@ -144,10 +136,9 @@
                 title.value = noteTitle;
                 desc.value = noteDesc;
             }
-            
 
             function showNotes(){
-                
+
                 otherContainer.innerHTML = '';
 
                 const filteredNotes = notes.filter(note => 
@@ -235,7 +226,7 @@
                                 // Store the background image URL in local storage
                                 localStorage.setItem('backgroundImage', imageUrl);
                                 // Set background image with 70% opacity
-                                noteCard.style.backgroundImage = `url(${imageUrl})`;
+                                noteCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${imageUrl})`;
                                 // Apply brightness to background image
                                 noteCard.style.filter = 'brightness(100%)';
                                 // Remove any background color
@@ -287,6 +278,7 @@
                     year = dateObj.getFullYear();
 
                     let noteInfo = {
+                        num : notes.length,
                         title : noteTitle,
                         description : noteDesc,
                         date : `${month} ${day}, ${year}`
@@ -306,8 +298,6 @@
                 }
             })
 
-
-
         }, [pinned, searchQuery]);
 
 
@@ -315,40 +305,33 @@
             setCardCount(cardCount + 1);
             console.log(`Card Count : ${cardCount}`)
         };
-        
-        
+
 
         return (
             <>
-                <div className='filter border-4 py-3 px-5 flex flex-row items-center gap-x-4 h-[9vh]'>
+                <div className='filter border-4 py-3 px-5 flex flex-row items-center justify-center gap-x-4 h-[9vh]'>
 
-                    <div className="sortDiv">
-                        <button className="sort relative border-2 flex flex-row rounded-xl justify-center items-center md:px-3 px-0">
-                            <img src={sort} alt="" className='w-6 absolute left-2 md:w-8' />
-                            <div className="flex justify-center p-2 gap-x-4 w-16 md:p-3 rounded-full">
-                                <select name="" id="" className='w-8 md:w-20 bg-transparent ml-1 border-none outline-none' value={sortBy}>
-                                    <option value=""></option>
-                                    <option value="increasing">Alphabetically Increasing</option>
-                                    <option value="decreasing">Alphabetically Decreasing</option>
-                                    <option value="new">Newest First</option>
-                                    <option value="old">Oldest First</option>
-                                </select>
+                    {/* <div className="sortDiv">
+                        <button className="sort border-2 p-2 flex flex-row rounded-xl justify-center items-center md:px-3 px-5 gap-x-0 sm:gap-x-5">
+                            <img src={sort} alt="" className='w-6 md:w-8' />
+                            <div className="flex justify-center gap-x-4 w-16 md:p-3 rounded-full">
+                            <select name="" id="" className='w-8 md:w-20 bg-transparent ml-1 border-none outline-none' value={sortBy} onChange={(e) => sortNotes(e.target.value)}> 
+                                <option value=""></option>
+                                <option value="increasing">Alphabetically Increasing</option>
+                                <option value="decreasing">Alphabetically Decreasing</option>
+                                <option value="new">Newest First</option>
+                                <option value="old">Oldest First</option>
+                            </select>
                             </div>
-                        </button>
-                    </div>
-
-                    {/* <div className='clearAll flex items-center justify-center border-2 rounded-xl px-4'>
-                        <button>
-                            Clear Filters
                         </button>
                     </div> */}
 
-                    <div className="search h-12 md:16 border-[2px] border-black rounded-full flex flex-row justify-center items-center px-5">
+                    <div className="search h-12 md:16 border-[2px] border-black rounded-full flex flex-row justify-between items-center px-5">
                         <form action="" method="" className='flex flex-row'>
                             <input type="text" 
-                                placeholder="Search..." 
+                                placeholder="Search for Notes..." 
                                 name="" 
-                                className='border-none outline-none'
+                                className='border-none outline-none w-[40vw]'
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             /> 
@@ -360,7 +343,9 @@
 
                 </div>
 
-                {showWrapper && (<div className="wrapper relative">
+                {
+                // showWrapper && 
+                (<div className="wrapper relative">
 
                     <div className='plusIcon bg-black w-16 h-16 rounded-xl fixed right-8 bottom-8 sm:right-16 sm:bottom-16 flex justify-center items-center text-5xl shadow-2xl shadow-slate-500 z-50'>
                         <button className='text-white'>+</button>

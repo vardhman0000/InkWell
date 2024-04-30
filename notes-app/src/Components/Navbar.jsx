@@ -15,8 +15,8 @@ const Navbar = () => {
             <ul className='hidden md:flex md:flex-row md:gap-x-5'>
                 <Link className='font-semibold px-5 py-4 text-lg' to="/">Home</Link>
                 <Link className='font-semibold px-5 py-4 text-lg' to="/Notes">Notes</Link>
-                <Link className='font-semibold px-5 py-4 text-lg' to="/">About Us</Link>
-                <Link className='font-semibold px-5 py-4 text-lg' to="/">Contact</Link>
+                <Link className='font-semibold px-5 py-4 text-lg' to="/AboutUs">About Us</Link>
+                <Link className='font-semibold px-5 py-4 text-lg' to="/Contact">Contact</Link>
             </ul>
         </div>
         <div className='w-48 flex justify-center'>

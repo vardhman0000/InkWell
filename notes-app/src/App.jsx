@@ -13,6 +13,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Login from './Components/Login'
 
 
 const router = createBrowserRouter([
@@ -24,13 +25,17 @@ const router = createBrowserRouter([
     path: "/Notes",
     element: <><Navbar/><Notes/></>
   },
+  {
+    path: "/AboutUs",
+    element: <><Navbar/><AboutUs/></>
+  },
+  {
+    path: "/Contact",
+    element: <><Navbar/><Contact/></>
+  },
   // {
-  //   path: "/AboutUs",
-  //   element: <><Navbar/><AboutUs/></>
-  // },
-  // {
-  //   path: "/Contact",
-  //   element: <><Navbar/><Contact/></>
+  //   path: "/Login",
+  //   element: <Login/>
   // },
 ]);
 
