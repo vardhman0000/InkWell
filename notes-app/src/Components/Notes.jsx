@@ -19,6 +19,16 @@ import './Sidebar.css'
 
 const Notes = () => {
     
+    const images = {
+        0: removeBg,
+        1: noteBg3,
+        2: noteBg4,
+        3: noteBg5,
+        4: noteBg6,
+        5: noteBg7
+    };
+    console.log(`CLICKING IMAGES : ${images[0]}`)
+
     const [notes, setNotes] = useState([]);        
     const [searchQuery, setSearchQuery] = useState('');         
     const [showWrapper, setShowWrapper] = useState(true);
@@ -26,6 +36,10 @@ const Notes = () => {
     const [hideAppear, setHideAppear] = useState(true);        
     const [noteCount, setNoteCount] = useState(0);        
     const storedNotes = JSON.parse(localStorage.getItem("notes") || "[]");
+
+    const [notePop, setNotePop] = useState(false);
+    const [selectedNote, setSelectedNote] = useState(['num', 'title', 'description', 'date', 'backgroundImage']);
+
 
     useEffect(() => {
         setNotes(storedNotes);
@@ -151,6 +165,14 @@ const Notes = () => {
             filteredNotes.forEach((note, index) => {
                 const noteCard = document.createElement('div');
                 noteCard.className = "noteCard bg-gray-100 p-4 rounded-lg shadow-sm w-[100%] mb-5 break-inside-avoid border-2 border-black bg-cover bg-center";
+
+                // if(note.bg) {
+                //     noteCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${note.bg})`;
+                //     noteCard.classList.remove('bg-gray-100');  // Remove the default background color if an image is set
+                // } else {
+                //     noteCard.style.backgroundImage = 'none';
+                //     noteCard.classList.add('bg-gray-100');
+                // }
         
                 noteCard.innerHTML = `
                     <div class="flex items-center justify-between">
@@ -168,7 +190,7 @@ const Notes = () => {
                         <div class="date text-slate-500">${note.date}</div>
                         <div class="settings flex justify-center items-center px-1 cursor-pointer relative">
                             <div class="imageIcon">
-                                <img src=${addImage2} alt="" class="add-image h-5 px-2 relative"/>
+                                <img src=${addImage2} alt="" class="add-image h-5 px-[4px] relative"/>
 
                                 <ul class="imageList absolute top-[-65px] left-[-90%] p-2 flex flex-row gap-x-2 rounded-lg bg-white h-15 overflow-hidden border-black border-2" >
 
@@ -196,8 +218,8 @@ const Notes = () => {
 
                                 </ul>
                             </div>
-                            <img src=${edit} alt="" class="editBtn h-5 px-2"/>
-                            <img src=${deleteIcon} alt="" class="deleteBtn h-5 px-2"/>
+                            <img src=${edit} alt="" class="editBtn h-5 px-[4px]"/>
+                            <img src=${deleteIcon} alt="" class="deleteBtn h-5 px-[4px]"/>
                         </div>
                     </div>
                 `;
@@ -223,7 +245,7 @@ const Notes = () => {
                             // Store the background image URL in local storage
                             localStorage.setItem('backgroundImage', imageUrl);
                             // Set background image with 70% opacity
-                            noteCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${imageUrl})`;
+                            noteCard.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${localStorage.getItem("backgroundImage")})`;
                             // Apply brightness to background image
                             noteCard.style.filter = 'brightness(100%)';
                             // Remove any background color
@@ -231,6 +253,8 @@ const Notes = () => {
                         }
                     });
                 });
+
+                
 
 
                 const pinHollow = noteCard.querySelector(".pinHollow")
@@ -265,54 +289,146 @@ const Notes = () => {
         showNotes();
 
 
+        // function showSideBar() {
+        //     const titleContainer = document.querySelector(".titleContainer");
+        //     titleContainer.innerHTML = ""; // Clear the existing sidebar content
+        
+        //     notes.forEach(note => {
+
+        //         const title = document.createElement('div');
+        //         title.className = "titleCells bg-gray-100 mb-1 font-semibold overflow-hidden text-ellipsis cursor-pointer";
+        //         title.innerHTML = note.title;
+        //         titleContainer.appendChild(title);
+        //         title.addEventListener("click", () => {
+
+        //             const clickedTitle = title.innerText;
+        //             console.log(`GOT TITLE : ${clickedTitle}`);
+
+        //             const clickedNote = notes.find(note => note.title == clickedTitle);
+        //             console.log(`CLICKED NOTE : ${clickedNote}`)
+
+        //             setSelectedNote([clickedNote.title, clickedNote.description, clickedNote.date])
+        //             setNotePop(!notePop)
+                    
+        //         })
+        //     });
+        // }
+
         function showSideBar() {
             const titleContainer = document.querySelector(".titleContainer");
             titleContainer.innerHTML = ""; // Clear the existing sidebar content
         
             notes.forEach(note => {
                 const title = document.createElement('div');
-                title.className = "titleCells bg-gray-100 mb-1 font-semibold overflow-hidden text-ellipsis";
+                title.className = "titleCells bg-gray-100 mb-1 font-semibold overflow-hidden text-ellipsis cursor-pointer";
                 title.innerHTML = note.title;
                 titleContainer.appendChild(title);
+                title.addEventListener("click", () => {
+                    const clickedTitle = title.innerText;
+                    console.log(`GOT TITLE : ${clickedTitle}`);
+        
+                    const clickedNote = notes.find(note => note.title == clickedTitle);
+                    console.log(`CLICKED NOTE : ${clickedNote.num}`)
+        
+                    setSelectedNote([clickedNote.num, clickedNote.title, clickedNote.description, clickedNote.date, clickedNote.bg])
+        
+                    // Apply the background image when displaying the note
+                    // const cardPopup = document.querySelector('.cardPop_inner');
+                    // if (clickedNote.bg) {
+                    //     cardPopup.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url(${clickedNote.bg})`;
+                    // } else {
+                    //     cardPopup.style.backgroundImage = 'none';
+                    // }
+        
+                    // setShowCardPopup(true);
+                    setNotePop(!notePop)
+                    crossNote.click();
+                });
             });
         }
+        
+
+
         showSideBar();
 
+
+
+        // addBtn.addEventListener('click', () => { 
+        //     let noteTitle = title.value;
+        //     let noteDesc = desc.value;
+
+        //     if(noteTitle && noteDesc){ // bug to be fixed
+        //         let dateObj = new Date();
+        //         let month = monthes[dateObj.getMonth()],
+        //         day = dateObj.getDate(),
+        //         year = dateObj.getFullYear();
+
+        //         let noteInfo = {
+        //             num : notes.length,
+        //             title : noteTitle,
+        //             description : noteDesc,
+        //             date : `${month} ${day}, ${year}`,
+        //             bg : localStorage.getItem("backgroundImage")
+        //         }
+
+        //         if(!isUpdate){
+        //             notes.push(noteInfo) // Adding New Note
+        //         } else {
+        //             notes[updateId] = noteInfo; // Updating Specified Note
+        //         }
+
+        //         localStorage.setItem("notes", JSON.stringify(notes))
+
+        //         crossNote.click();
+        //         showNotes();
+        //     }
+        // })
 
 
         addBtn.addEventListener('click', () => { 
             let noteTitle = title.value;
             let noteDesc = desc.value;
-
-            if(noteTitle && noteDesc){ // bug to be fixed
+        
+            if(noteTitle && noteDesc) {
                 let dateObj = new Date();
                 let month = monthes[dateObj.getMonth()],
                 day = dateObj.getDate(),
                 year = dateObj.getFullYear();
-
+        
                 let noteInfo = {
-                    num : notes.length,
-                    title : noteTitle,
-                    description : noteDesc,
-                    date : `${month} ${day}, ${year}`
+                    num: notes.length,
+                    title: noteTitle,
+                    description: noteDesc,
+                    date: `${month} ${day}, ${year}`,
+                    bg: localStorage.getItem("backgroundImage") || images[0]  // Store the background image URL or an empty string if not set
                 }
-
+        
                 if(!isUpdate){
-                    notes.push(noteInfo) // Adding New Note
+                    notes.push(noteInfo); // Adding New Note
                 } else {
                     notes[updateId] = noteInfo; // Updating Specified Note
                 }
-
+        
                 localStorage.setItem("notes", JSON.stringify(notes))
-
+        
                 crossNote.click();
                 showNotes();
             }
-        })
+        });
+        
 
-    }, [pinned, searchQuery, notes]);
 
-    
+
+    }, [pinned, searchQuery, notes, localStorage.getItem("backgroundImage")]);
+
+    function addBGI(noteTitle){
+        const clickedTitle = notes.find(note => note.title == noteTitle);
+        const clickedImage = clickedTitle;
+        console.log(`GOT CLICKED BG FROM IMAGE : ${clickedTitle}`);
+    }
+
+    const currImg = localStorage.getItem("backgroundImage");
+    console.log(`CURRENT STORED IMAGE : ${currImg}`)
 
     return (
         <>
@@ -416,25 +532,55 @@ const Notes = () => {
                 </div>
             </div>
 
-            <div className="confirmDel absolute top-0 left-0">
-
-                {show && (<div className="delContainer z-[0] h-screen w-screen bg-black bg-opacity-50 absolute top-0 left-0 flex items-center justify-center">
-
-                    <div className="delPopUp h-[30vh] w-[30vw] p-10 shadow-2xl flex flex-col items-center gap-y-8 rounded-xl bg-white relative">
-                        <header>
-                            <img src={cross} alt="" className='delCross absolute right-5 top-5 crossNote w-5 opacity-50 cursor-pointer'/>
-                        </header>
-                        <p className='text-black text-2xl font-semibold'>Are you sure you want to delete this note ?</p>
-                        <div className="confirmBtn flex items-center justify-around gap-x-20">
-                            <button className='cnfBtnYes p-3 w-28 rounded-xl border-2 border-black text-xl bg-gray-200'>Yes</button>
-                            <button className='cnfBtnNo p-3 w-28 rounded-xl border-2 border-black text-xl bg-gray-200'>No</button>
+            {notePop && (
+                <div className='cardPopUp border-2 border-black absolute top-[10vh] left-0 w-[99vw] h-[90vh] bg-black bg-opacity-40 flex items-center justify-center'>
+                    <div className="cardPop_inner flex flex-col items-center justify-center bg-white w-[80vw] md:w-[30vw] p-10 px-10 relative rounded-lg">
+                        <img onClick={() => setNotePop(!notePop)} src={cross} alt="closePopUp" className='h-7 absolute right-5 top-5 cursor-pointer' />
+                        <div className="flex items-center justify-between w-full mb-4">
+                            <h3 className="title text-2xl font-bold text-gray-900 overflow-hidden text-ellipsis whitespace-nowrap w-[80%]">{selectedNote[1]}</h3>
+                            <span className='pinHollow opacity-0 cursor-pointer relative' onClick={() => pinCard(selectedNote)}>
+                                <img src={pin1} alt="pinIcon" className='pinIcon w-8' />
+                                <img src={pin2} alt="pinFilled" className='pinFilled w-8 absolute top-0' />
+                            </span>
                         </div>
-
+                        <div className="w-[100%] overflow-y-auto overflow-x-hidden mb-2">
+                            <p className="content text-black break-words  p-2">{selectedNote[2]}</p>
+                        </div>
+                        <hr className="h-[2px] my-2 bg-slate-400 w-full" />
+                        <div className="bottom-content flex flex-row justify-between w-full">
+                            <div className="date text-slate-500">{selectedNote[3]}</div>
+                            {/* <div className="settings flex justify-center items-center px-[1px] cursor-pointer relative">
+                                <div className="imageIcon">
+                                    <img src={addImage2} alt="addImage2" className="add-image h-5 px-[4px] relative" />
+                                    <ul className="imageList absolute top-[40px] left-0 sm:top-[-65px] sm:left-[-90%] p-2 flex flex-col gap-y-2 columns-2 md:flex-row gap-x-2 rounded-lg bg-white h-15 overflow-hidden border-black border-2">
+                                        <li className="overflow-hidden border-2 h-10 border-black rounded-md hover:scale-110 w-6 flex items-center justify-center">
+                                            <img onClick={() => addBGI(selectedNote[0])} className="bgImg w-5 rounded-sm" src={images[0]} alt="removeBg" />
+                                        </li>
+                                        <li className="overflow-hidden border-2 w-6 border-black rounded-md hover:scale-110">
+                                            <img onClick={() => addBGI(selectedNote[0])} className="bgImg h-10 rounded-sm" src={images[4]} alt="noteBg6" />
+                                        </li>
+                                        <li className="overflow-hidden border-2 w-6 border-black rounded-md hover:scale-110">
+                                            <img onClick={() => addBGI(selectedNote[0])} className="bgImg h-10 rounded-sm" src={images[2]} alt="noteBg4" />
+                                        </li>
+                                        <li className="overflow-hidden border-2 w-6 border-black rounded-md hover:scale-110">
+                                            <img onClick={() => addBGI(selectedNote[0])} className="bgImg h-10 rounded-sm" src={images[3]} alt="noteBg5" />
+                                        </li>
+                                        <li className="overflow-hidden border-2 w-6 border-black rounded-md hover:scale-110">
+                                            <img onClick={() => addBGI(selectedNote[0])} className="bgImg h-10 rounded-sm" src={images[1]} alt="noteBg3" />
+                                        </li>
+                                        <li className="overflow-hidden border-2 w-6 border-black rounded-md hover:scale-110">
+                                            <img onClick={() => addBGI(selectedNote[0])} className="bgImg h-10 rounded-sm" src={images[5]} alt="noteBg7" />
+                                        </li>
+                                    </ul>
+                                </div>
+                                <img src={edit} alt="edit" className="editBtn h-5 px-[4px]" />
+                                <img src={deleteIcon} alt="deleteIcon" className="deleteBtn h-5 px-[4px]" />
+                            </div> */}
+                        </div>
                     </div>
+                </div>
+            )}
 
-                </div>)}
-
-            </div>
 
 
         </>
