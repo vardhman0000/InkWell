@@ -46,7 +46,7 @@ const Footer = () => {
                 <p className="text-center md:text-left mb-4 md:mb-0">
                 &copy; {new Date().getFullYear()} InkWell, Inc. All rights reserved.
                 </p>
-                <ul className="flex flex-wrap items-center justify-center md:justify-end">
+                {/* <ul className="flex flex-wrap items-center justify-center md:justify-end">
                     <li className="mr-4">
                         <a href="#" className="hover:underline">About</a>
                     </li>
@@ -65,7 +65,7 @@ const Footer = () => {
                     <li>
                         <a href="#" className="hover:underline">Partners</a>
                     </li>
-                </ul>
+                </ul> */}
             </div>
         </footer>
     );

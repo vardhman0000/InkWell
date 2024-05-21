@@ -1,0 +1,13 @@
+.navMain {
+    opacity: 0;
+    animation: slideIn 0.7s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

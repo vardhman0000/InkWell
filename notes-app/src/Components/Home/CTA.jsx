@@ -37,9 +37,9 @@ export default function CTA() {
                 >
                     Get started
                 </Link>
-                    <a href="#" className="text-sm font-semibold leading-6 text-white">
+                    {/* <a href="#" className="text-sm font-semibold leading-6 text-white">
                     Learn more <span aria-hidden="true">→</span>
-                    </a>
+                    </a> */}
                 </div>
                 </div>
                 <div className="relative mt-16 h-80 lg:mt-8">
