@@ -1,10 +1,45 @@
-import React from 'react';
-import Test from '../Test';
+import React, {useState} from 'react';
+
 
 const Contact = () => {
+
+  const [formData, setFormData] = useState({
+    name : "",
+    email : "",
+    message : ""
+  });
+
+  function inputData(e){
+    const {name, value} = e.target;
+    setFormData((prevData) => ({ 
+      ...prevData,
+      [name]:value,
+    }));
+  }
+
+  async function handleSubmit(e){
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:4003/contact", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      alert("Thankyou For Your Feedback");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+
   return (
     <div>
-      <section className="text-gray-600 body-font relative">
+      <form onSubmit={handleSubmit} className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
           <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
             <iframe
@@ -40,15 +75,15 @@ const Contact = () => {
             <p className="leading-relaxed mb-5 text-gray-600">Please provide us your valuable feedback</p>
             <div className="relative mb-4">
               <label htmlFor="name" className="leading-7 text-sm text-gray-600">Name</label>
-              <input type="text" id="name" name="name" className="w-full bg-white rounded border border-gray-300 focus:border-[#e78138] focus:ring-2 focus:ring-[#f3a97598] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+              <input onChange={inputData} value={formData.name} type="text" id="name" name="name" className="w-full bg-white rounded border border-gray-300 focus:border-[#e78138] focus:ring-2 focus:ring-[#f3a97598] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
             </div>
             <div className="relative mb-4">
               <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-              <input type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-[#e78138] focus:ring-2 focus:ring-[#f3a97598] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+              <input onChange={inputData} value={formData.email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-[#e78138] focus:ring-2 focus:ring-[#f3a97598] text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
             </div>
             <div className="relative mb-4">
               <label htmlFor="message" className="leading-7 text-sm text-gray-600">Message</label>
-              <textarea id="message" name="message" className="w-full bg-white rounded border border-gray-300 focus:border-[#e78138] focus:ring-2 focus:ring-[#f3a97598] h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+              <textarea onChange={inputData} value={formData.message} id="message" name="message" className="w-full bg-white rounded border border-gray-300 focus:border-[#e78138] focus:ring-2 focus:ring-[#f3a97598] h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
             </div>
             {/* <button className="text-white bg-[#ef8335] border-0 py-2 px-6 focus:outline-none hover:bg-[#faa442] hover:shadow-xl shadow-[#faa977] rounded text-lg">Button</button> */}
 
@@ -95,19 +130,18 @@ const Contact = () => {
                     ></path>
                   </svg>
                 </span>
-                <span
-                  class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white dark:group-hover:text-gray-200"
-                  >SUBMIT</span
-                >
+                <button type='submit' className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white dark:group-hover:text-gray-200"
+                  >SUBMIT</button>
               </div>
             </div>
 
             <p className="text-xs text-gray-500 mt-3 text-center">Privacy Policy</p>
           </div>
         </div>
-      </section>
+      </form>
     </div>
   );
 }
 
 export default Contact;
+
