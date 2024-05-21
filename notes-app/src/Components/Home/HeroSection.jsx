@@ -75,8 +75,8 @@ export default function HeroSection() {
                     </div> */}
                 </div>
 
-                <div className="text-center scale-110">
-                    <h1 className="welcomeText text-6xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                <div className="text-center scale-100 lg:scale-110">
+                    <h1 className="welcomeText text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                         Notes Made Simple 
                             <br/> 
                         Elevate Your Productivity

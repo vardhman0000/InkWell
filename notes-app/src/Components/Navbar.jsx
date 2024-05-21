@@ -30,13 +30,13 @@ const Navbar = () => {
             {isAuthenticated && (<p className='hidden sm:block'>{user.nickname}</p>)}
           </div>
 
-          <div className=' w-42 sm:w-48 flex flex-row justify-center items-center gap-x-10'>
+          <div className='w-28 md:w-36 h-12 md:h-[64px]  sm:w-48 flex flex-row justify-center items-center gap-x-10'>
               {isAuthenticated ? (
-                <button className='font-semibold text-lg px-6 py-3 rounded-full border-2 border-black hover:bg-black hover:text-white hover:scale-110' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                <button className='flex items-center justify-center w-fullfont-semibold text-lg px-4 md:px-4 py-3 rounded-full border-[2.3px] border-black hover:bg-black hover:text-white hover:scale-110 w-[150px] md:w-[8rem] h-12 md:h-14 font-bold' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
                   Log Out
                 </button>
               ) : (
-                <button className='font-semibold text-lg px-6 py-3 rounded-full border-2 border-black hover:bg-black hover:text-white hover:scale-110' onClick={() => loginWithRedirect()}>Log In</button>
+                <button className='flex items-center justify-center w-fullfont-semibold text-lg px-4 md:px-4 py-3 rounded-full border-[2.3px] border-black hover:bg-black hover:text-white hover:scale-110 w-[150px] md:w-[8rem] h-12 md:h-14 font-bold' onClick={() => loginWithRedirect()}>Log In</button>
               )}
           </div>
         </div>
