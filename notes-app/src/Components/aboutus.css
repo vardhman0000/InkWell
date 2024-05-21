@@ -1,0 +1,66 @@
+/* .cards {
+    opacity: 0;
+    animation: popIn 0.7s ease-in-out forwards;
+} */
+.cards {
+    opacity: 0;
+    animation: popIn 0.7s ease-in-out forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(200px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.ourTeam {
+    opacity: 0;
+    animation: popLeft 0.7s ease-in-out forwards;
+}
+@keyframes popLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.ourTeamBorder {
+    opacity: 0;
+    animation: popRight 0.7s ease-in-out forwards;
+
+}
+@keyframes popRight {
+    from {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.pageText {
+    opacity: 0;
+    animation: popRight 0.9s ease-in-out forwards;
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
