@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         redirect_uri: window.location.origin
       }}
     >
-      <App />
+      <App/>
     </Auth0Provider>,
 
   // </StrictMode>

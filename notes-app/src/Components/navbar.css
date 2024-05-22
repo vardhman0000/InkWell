@@ -1,13 +1,57 @@
-.navMain {
-    opacity: 0;
-    animation: slideIn 0.7s ease-in-out forwards;
+.--fromTop {
+    animation: fromTop ease-in-out forwards;
+}
+.--backToTop {
+    animation: backToTop ease-in-out forwards;
+}
+.--animation-duration-0-5 {
+    animation-duration: 0.5s;
 }
 
-@keyframes slideIn {
+@keyframes fromTop {
     from {
         opacity: 0;
+        transform: translateY(-144px);
     }
     to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes backToTop {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-144px);
+    }
+}
+
+.rotate {
+    animation: rotate 0.5s ease-in-out;
+}
+.rotateBack {
+    animation: rotateBack 0.5s ease-in-out;
+}
+
+@keyframes rotate {
+from {
+    transform: rotate(0deg);
+    opacity: 0;
+    }
+    to {
+        transform: rotate(90deg);
+        opacity: 1;
+    }
+}
+@keyframes rotateBack {
+from {
+    transform: rotate(0deg);
+    opacity: 0;
+    }
+    to {
+        transform: rotate(-90deg);
         opacity: 1;
     }
 }
