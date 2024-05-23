@@ -57,7 +57,7 @@ const Navbar = () => {
           <div className='pfpic flex flex-row items-center gap-x-2'>
 
             <div className="userDetails hidden  gap-x-0 sm:gap-x-2 md:flex items-center">
-              {isAuthenticated && (<img className='pf rounded-full w-10' src={user.picture} alt ="pf"/>)}
+              {isAuthenticated && (<img className='pf border-2 border-orange-600 p-[1px] rounded-full w-10' src={user.picture} alt ="pf"/>)}
               {isAuthenticated && (<p className='userName hidden lg:block'>{user.nickname}</p>)}
             </div>
 
@@ -102,7 +102,7 @@ const Navbar = () => {
         <div className="lower flex flex-row items-center justify-center gap-x-8">
 
             <div className="userDetails gap-x-0 sm:gap-x-2 flex items-center">
-              {isAuthenticated && (<img className='pf rounded-full w-10' src={user.picture} alt ="pf"/>)}
+              {isAuthenticated && (<img className='pf border-2 border-orange-600 p-[1px] rounded-full w-12' src={user.picture} alt ="pf"/>)}
               {isAuthenticated && (<p className='userName hidden sm:block'>{user.nickname}</p>)}
             </div>
 
