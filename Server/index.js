@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const {ContactModel} = require("./Models/Contact.model");
 require('dotenv').config()
 const {connection} = require('./Config/db');
+const { NotesModel } = require('./Models/Notes.model');
+const { UserModel } = require('./Models/User.model');
 
 const app = express();
 
@@ -38,6 +40,29 @@ app.post('/contact',async(req,res)=>{
     //     message:req.body.message
     // })
 });
+
+app.post("/addUser", async (req,res) => { 
+    try {
+        let user = new UserModel(req.body);
+        await user.save();
+        res.status(200).send({msg:'User Created!!',data:req.body});
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error creating user: " + error.message);
+    }
+ });
+
+app.post("/addNote", async (req,res) => { 
+    
+    try {
+        let note = new NotesModel(req.body);
+        await note.save();
+        res.status(200).send({msg:'Note Saved',data:req.body});
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error saving note: " + error.message);
+    }
+ });
 
 app.listen(process.env.PORT, async () => { 
     try {
