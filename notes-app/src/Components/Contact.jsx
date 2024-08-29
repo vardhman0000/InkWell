@@ -20,7 +20,7 @@ const Contact = () => {
   async function handleSubmit(e){
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:4003/contact", {
+      const response = await fetch("http://localhost:4444/contact", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
