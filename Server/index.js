@@ -45,30 +45,9 @@ app.post('/contact',async(req,res)=>{
     // })
 });
 
-// app.post("/addUser", async (req,res) => { 
-//     try {
-//         let user = new UserModel(req.body);
-//         await user.save();
-//         res.status(200).send({msg:'User Created!!',data:req.body});
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send("Error creating user: " + error.message);
-//     }
-//  });
 
-// app.post("/addNote", async (req,res) => { 
-    
-//     try {
-//         let note = new NotesModel(req.body);
-//         await note.save();
-//         res.status(200).send({msg:'Note Saved',data:req.body});
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send("Error saving note: " + error.message);
-//     }
-//  });
 
-// **************************** BACKEND ******************************* //
+// **************************** BACKEND APIs ******************************* //
 
 // Create Account
 app.post("/create-account", async (req,res) => { 
@@ -376,7 +355,7 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req,res) => {
 });
 
 
-
+// Start Server
 app.listen(process.env.PORT, async () => { 
     try {
         await connection; // Connect to Database on Starting the Server

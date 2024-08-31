@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const NotesSchema = new mongoose.Schema({
-    // userId : {
-    //     type : String,
-    //     ref : 'User',
-    //     required : true
-    // },
+
     title : {
         type : String,
         required : true
@@ -30,6 +26,7 @@ const NotesSchema = new mongoose.Schema({
         type : Date,
         default : new Date().getTime()
     }
+    
 });
 
 const NotesModel = mongoose.model("note", NotesSchema);
