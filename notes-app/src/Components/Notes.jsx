@@ -16,8 +16,38 @@ import removeBg from '../assets/removeImage.png'
 import sideBarMenu from '../assets/sideBarMenu.png'
 
 import './Sidebar.css'
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../utils/axiosInstance';
+import SingleNote from './SingleNote';
+import SingleNoteCard from './NoteCard/SingleNoteCard';
 
 const Notes = () => {
+
+    const [userInfo, setUserInfo] = useState(null)
+    const navigate = useNavigate();
+
+    // Get User Info
+    const getUserInfo = async () => {
+        try {
+            const response = await axiosInstance.get("/get-user");
+            if(response.data && response.data.user){
+                setUserInfo(response.data.user);
+            }
+        } catch (error) {
+            if(error.response.status === 401){
+                localStorage.clear();
+                navigate("/login");
+            }
+        }
+    }
+
+    useEffect(() => {
+      getUserInfo();
+    
+      return () => {};
+    }, [])
+    
+
     
     const images = {
         0: removeBg,
@@ -144,7 +174,7 @@ const Notes = () => {
 
         function showNotes(){
 
-            otherContainer.innerHTML = '';
+            // otherContainer.innerHTML = '';
 
             const filteredNotes = notes.filter(note => 
                 note.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -346,9 +376,6 @@ const Notes = () => {
                 });
             });
         }
-        
-
-
         showSideBar();
 
 
@@ -430,9 +457,13 @@ const Notes = () => {
     const currImg = localStorage.getItem("backgroundImage");
     console.log(`CURRENT STORED IMAGE : ${currImg}`)
 
+
+
+
+    
     return (
         <>
-            <div className='filter border-4 py-3 px-5 flex flex-row items-center justify-center gap-x-4 h-[9vh]'>
+            <div className='searchBar filter border-4 border-red-600 py-3 px-5 flex flex-row items-center justify-center gap-x-4 h-[9vh]'>
 
                 <div className="search h-12 md:16 border-[2px] border-black rounded-full flex flex-row justify-between items-center px-5">
                     <form action="" method="" className='flex flex-row'>
@@ -450,6 +481,7 @@ const Notes = () => {
                 </div>
 
             </div>
+
 
             {
             // showWrapper && 
@@ -481,7 +513,7 @@ const Notes = () => {
                     <div className="mainContainer w-[100vw] overflow-x-hidden sm:w-[85vw] h-[81vh] overflow-y-scroll">
 
                         {hidePinned && (
-                        <section className='pinnedContainer m-2 sm:m-5 rounded-lg'>
+                        <section className='pinnedContainer m-2 sm:m-5 rounded-lg border-4 border-green-500'>
 
                             <h3 className='my-5'>
                                 PINNED
@@ -495,14 +527,18 @@ const Notes = () => {
                             
                         </section>)}
 
-                        <section className='others m-2 sm:m-5 rounded-lg'>
+                        <section className='others m-2 sm:m-5 rounded-lg border-4 border-orange-500'>
 
                             <h3 className='my-5'>
                                 OTHERS
                             </h3>
                             <div className="otherContainer mx-auto columns-2 lg:columns-4 md:columns-3 sm:columns-2 gap-x-3 lg:gap-x-6 md:gap-x-5 sm:gap-x-4">
 
+                                <SingleNoteCard/>
+                                
                             </div>
+
+
                             
                         </section>
                     </div>

@@ -53,13 +53,28 @@ import Notes from './Components/Notes';
 import AboutUs from './Components/AboutUs';
 import Contact from './Components/Contact';
 import PageLoader from './Components/PageLoader';
+import Login from '../pages/Login/Login';
+import SignUp from '../pages/SignUp/SignUp';
 
 import {
   createBrowserRouter,
+  Route,
   RouterProvider,
   useLocation,
   useNavigationType,
+  useNavigate
 } from "react-router-dom";
+import NotesMain from '../pages/Notes/NotesMain';
+
+// const routes = (
+//   <Router>
+//     <Routes>
+//       <Route path='/login' exact element={<Login/>} />
+//       <Route path='/signUp' exact element={<Login/>} />
+//     </Routes>
+//   </Router>
+// );
+
 
 const MainLayout = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -74,9 +89,37 @@ const MainLayout = ({ children }) => {
     }
   }, [location, navigationType]);
 
+  //  **************************************************************************
+
+  const [userInfo, setUserInfo] = useState(null)
+  const navigate = useNavigate();
+
+  // Get User Info
+  const getUserInfo = async () => {
+      try {
+          const response = await axiosInstance.get("/get-user");
+          if(response.data && response.data.user){
+              setUserInfo(response.data.user);
+          }
+      } catch (error) {
+          if(error.response.status === 401){
+              localStorage.clear();
+              navigate("/login");
+          }
+      }
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  
+    return () => {};
+  }, [])
+
+  // **************************************************************************
+
   return (
     <>
-      <Navbar />
+      <Navbar userInfo = {userInfo} />
       {loading && <PageLoader />}
       {!loading && children}
     </>
@@ -93,7 +136,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/Notes",
+    path: "/notes",
     element: (
       <MainLayout>
         <Notes />
@@ -109,11 +152,35 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/Contact",
+    path: "/contact",
     element: (
       <MainLayout>
         <Contact />
       </MainLayout>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <MainLayout>
+        <Login/>
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/sign-up",
+    element: (
+      <MainLayout>
+        <SignUp/>
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/notes-updated",
+    element: (
+      // <MainLayout>
+        <NotesMain/>
+      // </MainLayout>
     ),
   },
 ]);

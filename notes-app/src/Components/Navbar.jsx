@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
-import logo  from "../assets/logo.gif";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import LogoVideo from './LogoVideo';
 import { useAuth0 } from "@auth0/auth0-react";
 import './navbar.css'
 import { MdMenu } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import ProfileCard from './ProfileCard/ProfileCard';
 
-const Navbar = () => {
+const Navbar = ({userInfo}) => {
   const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
 
   const [showMenu, setShowMenu] = useState(false);
@@ -35,6 +35,12 @@ const Navbar = () => {
 
   }
 
+
+  const navigate = useNavigate;
+  const onLogout = () => {
+    navigate("/login");
+  }
+
   return (
 
     <>
@@ -47,14 +53,14 @@ const Navbar = () => {
           <div className='navPages'>
               <ul className='hidden md:flex md:flex-row md:gap-x-5'>
                   <Link className='font-semibold px-5 py-4 text-lg hover:text-orange-500 hover:scale-110' to="/">Home</Link>
-                  <Link className='font-semibold px-5 py-4 text-lg hover:text-orange-500 hover:scale-110' to="/Notes">Notes</Link>
+                  <Link className='font-semibold px-5 py-4 text-lg hover:text-orange-500 hover:scale-110' to="/notes-updated">Notes</Link>
                   <Link className='font-semibold px-5 py-4 text-lg hover:text-orange-500 hover:scale-110' to="/AboutUs">About Us</Link>
                   <Link className='font-semibold px-5 py-4 text-lg hover:text-orange-500 hover:scale-110' to="/Contact">Contact</Link>
               </ul>
           </div>
 
-
-          <div className='pfpic flex flex-row items-center gap-x-2'>
+          {/* Login Button Here */}
+          {/* <div className='pfpic flex flex-row items-center gap-x-2'>
 
             <div className="userDetails hidden  gap-x-0 sm:gap-x-2 md:flex items-center">
               {isAuthenticated && (<img className='pf border-2 border-orange-600 p-[1px] rounded-full w-10' src={user.picture} alt ="pf"/>)}
@@ -72,16 +78,18 @@ const Navbar = () => {
 
             </div>
 
-          </div>
+          </div> */}
 
 
-          <div className="flex menuCont md:hidden items-center justify-center h-12 w-20 rounded-full">
+          {/* <div className="flex menuCont md:hidden items-center justify-center h-12 w-20 rounded-full">
             { !showMenu ? (
               <MdMenu onClick={() => handleMenuClick()} className={`h-8 w-8 ${rotate ? 'rotate' : ''}`} />
             ) : (
               <RxCross2 onClick={() => handleMenuClick()} className={`h-8 w-8 ${rotate ? 'rotate' : ''}`} />
             )}
-          </div>
+          </div> */}
+
+          <ProfileCard onLogout={onLogout}/>
             
         </nav>
       </div>

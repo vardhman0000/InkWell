@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
+  .icon-btn {
+    @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+  }
+}
+
+/* @layer components {
+  .input-box {
+    @apply w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none;
+  }
+  .btn-primary {
+    @apply wfull text-sm bg-primary text-white p-2 rounded my-1 hover:bg-blue-600 ;
+  }
+} */
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
