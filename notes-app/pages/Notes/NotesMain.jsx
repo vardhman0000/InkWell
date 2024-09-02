@@ -1,15 +1,17 @@
 import React from "react";
 import Navbar from "../../src/Components/Navbar";
 import SearchBar from "../../src/Components/SearchBar/SearchBar";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import SingleNote from "../../src/Components/SingleNote";
 import SingleNoteCard from "../../src/Components/NoteCard/SingleNoteCard";
 import { MdAdd } from "react-icons/md";
 import AddEditNotes from "./AddEditNotes";
 import Modal from "react-modal";
+import axiosInstance from "../../utils/axiosInstance";
 
 function NotesMain() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [allNotes, setAllNotes] = useState([]);
 
   const handleSearch = () => {};
 
@@ -22,6 +24,32 @@ function NotesMain() {
     type: "add",
     data: null,
   });
+
+  const handleEdit = (noteDetails) => {
+    setOpenAddEditModel({isShown : true, data : noteDetails, type : "edit"})
+  }
+
+  // Get All Notes
+  const getAllNotes = async () => {
+    try {
+      const response = await axiosInstance.get("/get-notes");
+
+      if(response.data && response.data.notes){
+        setAllNotes(response.data.notes);
+      }
+
+    } catch (error) {
+      console.log("An unexpected error occurred...Try Again!!");
+      
+    }
+  }
+
+  useEffect(() => {
+    getAllNotes();
+  
+    return () => {}
+  }, [])
+  
 
   return (
     <>
@@ -45,46 +73,21 @@ function NotesMain() {
           className="container mx-auto columns-2 lg:columns-4 md:columns-3 sm:columns-2 gap-x-3 lg:gap-x-6 md:gap-x-5 sm:gap-x-4 border-red-500 border-4"
           style={{ minHeight: "calc(100vh - 19vh)" }}
         >
-          <SingleNoteCard
-            title="First Note"
-            date="3rd November 2024"
-            content="lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
-            tags="#Meeting"
-            isPinned={true}
-            onEdit={() => {}}
+
+          {allNotes.map((item, index) => (
+            <SingleNoteCard
+            key={item._id}
+            title={item.title}
+            date={item.createdOn}
+            content={item.content}
+            tags={item.tags}
+            isPinned={item.isPinned}
+            onEdit={() => handleEdit(item)}
             onDelete={() => {}}
             onPinNote={() => {}}
           />
-          <SingleNoteCard
-            title="First Note"
-            date="3rd November 2024"
-            content="lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
-            tags="#Meeting"
-            isPinned={true}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          />
-          <SingleNoteCard
-            title="First Note"
-            date="3rd November 2024"
-            content="lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
-            tags="#Meeting"
-            isPinned={true}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          />
-          <SingleNoteCard
-            title="First Note"
-            date="3rd November 2024"
-            content="lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
-            tags="#Meeting"
-            isPinned={true}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          />
+          ))}
+
         </div>
       </div>
 
@@ -109,11 +112,13 @@ function NotesMain() {
         className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll "
       >
         <AddEditNotes
-        type={openAddEditModal.type}
-        noteData={openAddEditModal.data}
-        onClose={() => {
-            setOpenAddEditModel({isShown:false, type:"add", data:null});
-        }} />
+          type={openAddEditModal.type}
+          noteData={openAddEditModal.data}
+          onClose={() => {
+              setOpenAddEditModel({isShown:false, type:"add", data:null});
+          }} 
+          getAllNotes={getAllNotes}
+        />
       </Modal>
     </>
   );

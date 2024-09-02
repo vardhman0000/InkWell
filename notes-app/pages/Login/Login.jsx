@@ -39,7 +39,7 @@ function Login() {
         // Login Success
         if(response.data && response.data.accessToken){
             localStorage.setItem("token", response.data.accessToken);
-            navigate('/notes');
+            navigate('/notes-updated');
         }
 
     } catch (error) {
