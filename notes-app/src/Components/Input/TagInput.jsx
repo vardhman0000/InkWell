@@ -26,7 +26,7 @@ function TagInput({ tags, setTags }) {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {tags?.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap mt-2">
           {tags.map((tag, index) => (
@@ -44,17 +44,17 @@ function TagInput({ tags, setTags }) {
         </div>
       )}
 
-      <div className="flex items-center gap-4 mt-3">
+      <div className="flex items-center gap-2 mt-3">
         <input
           type="text"
           value={inputValue}
-          className="text-sm bg-transparent border px-3 py-2 rounded outline-none"
+          className="text-sm w-full bg-transparent border px-3 py-2 rounded outline-none"
           placeholder="Add Tags"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
         <button
-          className="w-8 h-8 flex items-center justify-center rounded border border-black hover:bg-black"
+          className="w-10 h-9 flex items-center justify-center rounded border border-black hover:bg-black"
           onClick={() => {
             addNewTag();
           }}

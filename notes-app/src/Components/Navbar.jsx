@@ -36,8 +36,9 @@ const Navbar = ({userInfo}) => {
   }
 
 
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const onLogout = () => {
+    localStorage.clear();
     navigate("/login");
   }
 
@@ -89,7 +90,7 @@ const Navbar = ({userInfo}) => {
             )}
           </div> */}
 
-          <ProfileCard onLogout={onLogout}/>
+          <ProfileCard userInfo={userInfo} onLogout={onLogout}/>
             
         </nav>
       </div>

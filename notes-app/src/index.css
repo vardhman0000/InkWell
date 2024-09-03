@@ -5,9 +5,15 @@
 
 @layer components {
   .icon-btn {
-    @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+    @apply text-xl text-slate-600 cursor-pointer hover:text-black;
   }
 }
+
+/* @layer components {
+  .icon-btn {
+    @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+  }
+} */
 
 /* @layer components {
   .input-box {

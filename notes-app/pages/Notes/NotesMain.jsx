@@ -1,17 +1,26 @@
 import React from "react";
 import Navbar from "../../src/Components/Navbar";
 import SearchBar from "../../src/Components/SearchBar/SearchBar";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import SingleNote from "../../src/Components/SingleNote";
 import SingleNoteCard from "../../src/Components/NoteCard/SingleNoteCard";
 import { MdAdd } from "react-icons/md";
 import AddEditNotes from "./AddEditNotes";
 import Modal from "react-modal";
 import axiosInstance from "../../utils/axiosInstance";
+import Toast from "../../src/Components/ToastMessage/Toast";
+import { useNavigate } from "react-router-dom";
+import EmptyCard from "../../src/Components/EmptyCard/EmptyCard";
 
 function NotesMain() {
   const [searchQuery, setSearchQuery] = useState("");
   const [allNotes, setAllNotes] = useState([]);
+
+  const [showToastMsg, setShowToastMsg] = useState({
+    isShown: false,
+    message: "",
+    type: "add",
+  });
 
   const handleSearch = () => {};
 
@@ -26,37 +35,115 @@ function NotesMain() {
   });
 
   const handleEdit = (noteDetails) => {
-    setOpenAddEditModel({isShown : true, data : noteDetails, type : "edit"})
-  }
+    setOpenAddEditModel({ isShown: true, data: noteDetails, type: "edit" });
+  };
+
+  const showToastMessage = (message, type) => {
+    setShowToastMsg({
+      isShown: true,
+      message,
+      type,
+    });
+  };
+  const handleCloseToast = () => {
+    setShowToastMsg({
+      isShown: false,
+      message: "",
+    });
+  };
 
   // Get All Notes
   const getAllNotes = async () => {
     try {
       const response = await axiosInstance.get("/get-notes");
 
-      if(response.data && response.data.notes){
+      if (response.data && response.data.notes) {
         setAllNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.log("An unexpected error occurred...Try Again!!");
+    }
+  };
+
+  // Delete Notes
+  const deleteNote = async (data) => {
+
+    const noteId = data._id;
+    try {
+      const response = await axiosInstance.delete("/delete-note/" + noteId)
+
+      if(response.data && !response.data.error){
+        showToastMessage("Note Deleted Successfully", 'delete')
+        getAllNotes();
       }
 
     } catch (error) {
-      console.log("An unexpected error occurred...Try Again!!");
-      
+      if(
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ){
+        console.log("An unexpected error occurred... Please try again!!");
+
+      }
     }
   }
 
+
+  const [userInfo, setUserInfo] = useState(null);
+
+  const navigate = useNavigate();
+
+  // Get User Info
+  const getUserInfo = async () => {
+      try {
+          const response = await axiosInstance.get("/get-user");
+          if(response.data && response.data.user){
+              setUserInfo(response.data.user);
+          }
+      } catch (error) {
+          if(error.response.status === 401){
+              localStorage.clear();
+              navigate("/login")
+          }
+      }
+  };
+
   useEffect(() => {
-    getAllNotes();
-  
+      getUserInfo();
+      getAllNotes();
+
     return () => {}
   }, [])
-  
+
+
+  // Pin Note
+  const updateIsPinned = async (noteData) => {
+    const noteId = noteData._id;
+      try {
+        const response = await axiosInstance.put("/update-note-pinned/" + noteId, {
+            isPinned : !noteData.isPinned
+          }
+        );
+
+        if(response.data && response.data.note){
+          showToastMessage("Note Updated Successfully");
+          getAllNotes();
+        }
+
+      } catch (error) {
+        console.log(error);
+        
+      }
+  }
+
 
   return (
     <>
-      <Navbar />
+      <Navbar userInfo={userInfo} />
 
-      <div className="h-72 p-20 flex items-center justify-center border-4 border-green-400">
-        <div className="h-16 flex items-center justify-center">
+      <div className="h-72 p-20 flex items-center justify-center ">
+        <div className="h-20 flex items-center justify-center">
           <SearchBar
             value={searchQuery}
             onChange={({ target }) => {
@@ -68,37 +155,40 @@ function NotesMain() {
         </div>
       </div>
 
-      <div className="p-20 border-blue-400 border-4">
-        <div
-          className="container mx-auto columns-2 lg:columns-4 md:columns-3 sm:columns-2 gap-x-3 lg:gap-x-6 md:gap-x-5 sm:gap-x-4 border-red-500 border-4"
-          style={{ minHeight: "calc(100vh - 19vh)" }}
+      <div className="p-28">
+        {allNotes.length > 0 ? (<div
+          className="container w-[80%] mx-auto p-28 columns-2 lg:columns-4 md:columns-3 sm:columns-2 gap-x-3 lg:gap-x-6 md:gap-x-5 sm:gap-x-4"
+          // style={{ minHeight: "calc(100vh - 19vh)" }}
         >
-
           {allNotes.map((item, index) => (
             <SingleNoteCard
-            key={item._id}
-            title={item.title}
-            date={item.createdOn}
-            content={item.content}
-            tags={item.tags}
-            isPinned={item.isPinned}
-            onEdit={() => handleEdit(item)}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          />
+              key={item._id}
+              title={item.title}
+              date={item.createdOn}
+              content={item.content}
+              tags={item.tags}
+              isPinned={item.isPinned}
+              onEdit={() => handleEdit(item)}
+              onDelete={() => deleteNote(item)}
+              onPinNote={() => updateIsPinned(item)}
+            />
           ))}
+        </div>) : (
+          <div className="h-full">
+            <EmptyCard/>
+          </div>
+        ) }
 
-        </div>
+
       </div>
 
-      <button
-        className="w-16 h-16 flex items-center justify-center rounded-2xl bg-black hover:bg-gray-700 absolute right-10 bottom-10"
-        onClick={() => {
+      <div className="plusIcon bg-black w-16 h-16 rounded-xl fixed right-8 bottom-8 sm:right-16 sm:bottom-16 flex justify-center items-center text-5xl shadow-2xl shadow-slate-500 z-50">
+
+        <button className="text-white" onClick={() => {
           setOpenAddEditModel({ isShown: true, type: "add", data: null });
-        }}
-      >
-        <MdAdd className="text-[32px] text-white" />
-      </button>
+        }}>+</button>
+
+      </div>
 
       <Modal
         isOpen={openAddEditModal.isShown}
@@ -109,17 +199,25 @@ function NotesMain() {
           },
         }}
         contentLabel=""
-        className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll "
+        className="rounded-md mx-auto mt-14 p-5 overflow-scroll "
       >
         <AddEditNotes
           type={openAddEditModal.type}
           noteData={openAddEditModal.data}
           onClose={() => {
-              setOpenAddEditModel({isShown:false, type:"add", data:null});
-          }} 
+            setOpenAddEditModel({ isShown: false, type: "add", data: null });
+          }}
           getAllNotes={getAllNotes}
+          showToastMessage={showToastMessage}
         />
       </Modal>
+
+      <Toast
+        isShown={showToastMsg.isShown}
+        message={showToastMsg.message}
+        type={showToastMsg.type}
+        onClose={handleCloseToast}
+      />
     </>
   );
 }

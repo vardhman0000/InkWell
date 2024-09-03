@@ -72,7 +72,7 @@ app.post("/create-account", async (req,res) => {
         .json({error : true, message : "Password is Required!!"})
     }
 
-
+    // Check Existing User
     const isUser = await UserModel.findOne({email:email});
 
     if(isUser){
