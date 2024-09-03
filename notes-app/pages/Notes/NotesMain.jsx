@@ -22,11 +22,7 @@ function NotesMain() {
     type: "add",
   });
 
-  const handleSearch = () => {};
-
-  const onClearSearch = () => {
-    setSearchQuery("");
-  };
+  
 
   const [openAddEditModal, setOpenAddEditModel] = useState({
     isShown: false,
@@ -138,6 +134,40 @@ function NotesMain() {
   }
 
 
+  // Search Note
+  const [isSearch, setIsSearch] = useState(false);
+  const handleSearch = () => {
+    if(searchQuery){
+      setSearchQuery(searchQuery);
+    }
+  };
+
+  const onClearSearch = () => {
+    setSearchQuery("");
+  };
+  const onSearchNote = async (query) => {
+    try {
+      const response = await axiosInstance.get("/search-notes/", {
+        params : {query},
+      });
+
+      if(response.data && response.data.notes){
+        setIsSearch(true);
+        setAllNotes(response.data.notes);
+      }
+
+    } catch (error) {
+      console.error(error);
+      
+    }
+  }
+
+  const handleClearSearch = () => {
+    setIsSearch(false);
+    getAllNotes();
+  }
+
+
   return (
     <>
       <Navbar userInfo={userInfo} />
@@ -151,6 +181,8 @@ function NotesMain() {
             }}
             handleSearch={handleSearch}
             onClearSearch={onClearSearch}
+            onSearchNote={onSearchNote}
+            handleClearSearch={handleClearSearch}
           />
         </div>
       </div>

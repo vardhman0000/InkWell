@@ -3,26 +3,32 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { IoMdClose } from 'react-icons/io'
 
 
-function SearchBar({value, onChange, handleSearch, onClearSearch}) {
+function SearchBar({value, onChange, handleSearch, onClearSearch, onSearchNote, handleClearSearch}) {
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className='w-full flex items-center justify-center px-4 bg-slate-100 rounded-md'>
-
         <input
-        type="text"
-        placeholder='Search Notes'
-        className='w-96 h-10 bg-transparent text-xs py-[11px] outline-none'
-        value={value}
-        onChange={onChange} 
+          type="text"
+          placeholder='Search Notes'
+          className='w-96 h-10 bg-transparent text-xs py-[11px] outline-none'
+          value={value}
+          onChange={onChange} 
+          onKeyPress={handleKeyPress}
         />
 
         {value && (
             <IoMdClose
-            className='text-xl text-slate-500 cursor-poiner hover:text-black mr-3'
+            className='text-xl text-slate-500 cursor-pointer hover:text-black mr-3'
             onClick={onClearSearch}/>
         )}
 
         <FaMagnifyingGlass className='text-slate-400 cursor-pointer hover:text-black' onClick={handleSearch} />
-
     </div>
   )
 }

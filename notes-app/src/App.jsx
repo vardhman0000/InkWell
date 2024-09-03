@@ -12,7 +12,6 @@
 
 // import PageLoader from './Components/PageLoader'
 
-
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -43,18 +42,16 @@
 
 // export default App
 
-
-
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import Navbar from './Components/Navbar';
-import Home from './Components/Home';
-import Notes from './Components/Notes';
-import AboutUs from './Components/AboutUs';
-import Contact from './Components/Contact';
-import PageLoader from './Components/PageLoader';
-import Login from '../pages/Login/Login';
-import SignUp from '../pages/SignUp/SignUp';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Navbar from "./Components/Navbar";
+import Home from "./Components/Home";
+import Notes from "./Components/Notes";
+import AboutUs from "./Components/AboutUs";
+import Contact from "./Components/Contact";
+import PageLoader from "./Components/PageLoader";
+import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
 
 import {
   createBrowserRouter,
@@ -62,9 +59,9 @@ import {
   RouterProvider,
   useLocation,
   useNavigationType,
-  useNavigate
+  useNavigate,
 } from "react-router-dom";
-import NotesMain from '../pages/Notes/NotesMain';
+import NotesMain from "../pages/Notes/NotesMain";
 
 // const routes = (
 //   <Router>
@@ -75,14 +72,13 @@ import NotesMain from '../pages/Notes/NotesMain';
 //   </Router>
 // );
 
-
 const MainLayout = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigationType = useNavigationType();
-  
+
   useEffect(() => {
-    if (navigationType === 'PUSH' || navigationType === 'REPLACE') {
+    if (navigationType === "PUSH" || navigationType === "REPLACE") {
       setLoading(true);
       const timer = setTimeout(() => setLoading(false), 1500);
       return () => clearTimeout(timer);
@@ -91,35 +87,35 @@ const MainLayout = ({ children }) => {
 
   //  **************************************************************************
 
-  const [userInfo, setUserInfo] = useState(null)
+  const [userInfo, setUserInfo] = useState(null);
+
   const navigate = useNavigate();
 
   // Get User Info
   const getUserInfo = async () => {
-      try {
-          const response = await axiosInstance.get("/get-user");
-          if(response.data && response.data.user){
-              setUserInfo(response.data.user);
-          }
-      } catch (error) {
-          if(error.response.status === 401){
-              localStorage.clear();
-              navigate("/login");
-          }
+    try {
+      const response = await axiosInstance.get("/get-user");
+      if (response.data && response.data.user) {
+        setUserInfo(response.data.user);
       }
-  }
+    } catch (error) {
+      if (error.response.status === 401) {
+        localStorage.clear();
+        navigate("/login");
+      }
+    }
+  };
 
   useEffect(() => {
     getUserInfo();
-  
     return () => {};
-  }, [])
+  }, []);
 
   // **************************************************************************
 
   return (
     <>
-      <Navbar userInfo = {userInfo} />
+      <Navbar userInfo={userInfo} />
       {loading && <PageLoader />}
       {!loading && children}
     </>
@@ -163,7 +159,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <MainLayout>
-        <Login/>
+        <Login />
       </MainLayout>
     ),
   },
@@ -171,7 +167,7 @@ const router = createBrowserRouter([
     path: "/sign-up",
     element: (
       <MainLayout>
-        <SignUp/>
+        <SignUp />
       </MainLayout>
     ),
   },
@@ -179,17 +175,14 @@ const router = createBrowserRouter([
     path: "/notes-updated",
     element: (
       // <MainLayout>
-        <NotesMain/>
+      <NotesMain />
       // </MainLayout>
     ),
   },
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
-

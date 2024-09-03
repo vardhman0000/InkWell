@@ -60,37 +60,12 @@ const Navbar = ({userInfo}) => {
               </ul>
           </div>
 
-          {/* Login Button Here */}
-          {/* <div className='pfpic flex flex-row items-center gap-x-2'>
 
-            <div className="userDetails hidden  gap-x-0 sm:gap-x-2 md:flex items-center">
-              {isAuthenticated && (<img className='pf border-2 border-orange-600 p-[1px] rounded-full w-10' src={user.picture} alt ="pf"/>)}
-              {isAuthenticated && (<p className='userName hidden lg:block'>{user.nickname}</p>)}
-            </div>
+          <div>
+            
+            <ProfileCard userInfo={userInfo} onLogout={onLogout}/>
 
-            <div className='w-[10rem] md:w-36 h-12 md:h-[64px] hidden sm:w-48 md:flex flex-row justify-center items-center gap-x-2'>
-                {isAuthenticated ? (
-                  <button className='flex items-center justify-center w-fullfont-semibold text-lg px-4 md:px-4 py-3 rounded-full border-[2.3px] border-black hover:bg-black hover:text-white hover:scale-110 w-[150px] md:w-[8rem] h-12 md:h-14 font-bold' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-                    Log Out
-                  </button>
-                ) : (
-                  <button className='flex items-center justify-center w-fullfont-semibold text-lg px-4 md:px-4 py-3 rounded-full border-[2.3px] border-black hover:bg-black hover:text-white hover:scale-110 w-[150px] md:w-[8rem] h-12 md:h-14 font-bold' onClick={() => loginWithRedirect()}>Log In</button>
-                )}
-
-            </div>
-
-          </div> */}
-
-
-          {/* <div className="flex menuCont md:hidden items-center justify-center h-12 w-20 rounded-full">
-            { !showMenu ? (
-              <MdMenu onClick={() => handleMenuClick()} className={`h-8 w-8 ${rotate ? 'rotate' : ''}`} />
-            ) : (
-              <RxCross2 onClick={() => handleMenuClick()} className={`h-8 w-8 ${rotate ? 'rotate' : ''}`} />
-            )}
-          </div> */}
-
-          <ProfileCard userInfo={userInfo} onLogout={onLogout}/>
+          </div>
             
         </nav>
       </div>

@@ -67,6 +67,7 @@ import Vardhman from '../assets/Vardhman1.jpg'
 import vartika1 from '../assets/Vartika2.jpg'
 import taniya from '../assets/Taniya1.jpg'
 import vansh from '../assets/Vansh1.jpg'
+import vanshita from '../assets/Vanshita_edit.png'
 import './aboutus.css'
 
 const AboutUs = () => {
@@ -82,13 +83,13 @@ const AboutUs = () => {
       description: 'Innovative web developer building interactive solutions with cutting-edge technology and design.'
     },
     {
-      name: 'Taniya Singla',
+      name: 'Vaishnavi Singh',
       image: taniya,
       description: 'Experienced web developer delivering seamless user experiences through elegant design and functionality.'
     },
     {
-      name: 'Vansh Pant',
-      image: vansh,
+      name: 'Vanshita',
+      image: vanshita,
       description: 'Skilled web developer specializing in crafting intuitive, responsive, and visually stunning websites.'
     }
   ];
