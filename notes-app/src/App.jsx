@@ -62,6 +62,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import NotesMain from "../pages/Notes/NotesMain";
+import axiosInstance from "../utils/axiosInstance";
 
 // const routes = (
 //   <Router>
@@ -83,6 +84,7 @@ const MainLayout = ({ children }) => {
       const timer = setTimeout(() => setLoading(false), 1500);
       return () => clearTimeout(timer);
     }
+
   }, [location, navigationType]);
 
   //  **************************************************************************
@@ -128,7 +130,7 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <Home />
-      </MainLayout>
+       </MainLayout>
     ),
   },
   {
@@ -174,9 +176,9 @@ const router = createBrowserRouter([
   {
     path: "/notes-updated",
     element: (
-      // <MainLayout>
-      <NotesMain />
-      // </MainLayout>
+      <MainLayout>
+        <NotesMain />
+      </MainLayout>
     ),
   },
 ]);

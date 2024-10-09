@@ -5,7 +5,7 @@ import Stats from './Home/Stats'
 import Testimonial from './Home/Testimonial'
 import Footer from './Home/Footer'
 import CTA from './Home/CTA'
-import Navbar from './Navbar'
+
 
 const Home = () => {
   return (
@@ -30,9 +30,9 @@ const Home = () => {
         <Testimonial/>
       </section>
 
-    <section className="footer">
-      <Footer/>
-    </section>
+      <section className="footer">
+        <Footer/>
+      </section>
 
     </div>
 

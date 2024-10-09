@@ -86,27 +86,27 @@ function NotesMain() {
   }
 
 
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
 
   const navigate = useNavigate();
 
   // Get User Info
-  const getUserInfo = async () => {
-      try {
-          const response = await axiosInstance.get("/get-user");
-          if(response.data && response.data.user){
-              setUserInfo(response.data.user);
-          }
-      } catch (error) {
-          if(error.response.status === 401){
-              localStorage.clear();
-              navigate("/login")
-          }
-      }
-  };
+  // const getUserInfo = async () => {
+  //     try {
+  //         const response = await axiosInstance.get("/get-user");
+  //         if(response.data && response.data.user){
+  //             setUserInfo(response.data.user);
+  //         }
+  //     } catch (error) {
+  //         if(error.response.status === 401){
+  //             localStorage.clear();
+  //             navigate("/login")
+  //         }
+  //     }
+  // };
 
   useEffect(() => {
-      getUserInfo();
+      // getUserInfo();
       getAllNotes();
 
     return () => {}
@@ -170,8 +170,6 @@ function NotesMain() {
 
   return (
     <>
-      <Navbar userInfo={userInfo} />
-
       <div className="h-72 p-20 flex items-center justify-center ">
         <div className="h-20 flex items-center justify-center">
           <SearchBar

@@ -56,9 +56,9 @@ function Login() {
   return (
     <>
       <div className="flex items-center justify-center mt-28" style={{ minHeight: "calc(100vh - 9.5vh)" }}>
-        <div className="w-96 border rounded bg-white px-7 py-10">
+        <div className="w-96 rounded bg-white px-7 py-10">
           <form onSubmit={handleLogin}>
-            <h4 className="text-2xl mb-10">Login</h4>
+            <h4 className="text-2xl mb-10 p-4">Login</h4>
  
             <input 
             type="text"
