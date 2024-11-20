@@ -5,12 +5,6 @@ import { IoMdClose } from 'react-icons/io'
 
 function SearchBar({value, onChange, handleSearch, onClearSearch}) {
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
   return (
     <div className='w-full flex items-center justify-center px-4 bg-slate-100 rounded-md'>
         <input

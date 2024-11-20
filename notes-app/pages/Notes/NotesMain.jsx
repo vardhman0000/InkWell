@@ -117,6 +117,10 @@ function NotesMain() {
   const [isSearch, setIsSearch] = useState(false);
 
   const handleSearch = () => {
+    if(searchQuery == ""){
+      setIsSearch(false);
+      getAllNotes();
+    }
     if(searchQuery){
       onSearchNote(searchQuery);
     }
@@ -124,6 +128,8 @@ function NotesMain() {
 
   const onClearSearch = () => {
     setSearchQuery("");
+    setIsSearch(false);
+    getAllNotes();
   };
 
 
