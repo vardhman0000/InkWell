@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import EmptyCard from "../../src/Components/EmptyCard/EmptyCard";
 
 function NotesMain() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [allNotes, setAllNotes] = useState([]);
 
   const [showToastMsg, setShowToastMsg] = useState({
@@ -21,8 +20,6 @@ function NotesMain() {
     message: "",
     type: "add",
   });
-
-  
 
   const [openAddEditModal, setOpenAddEditModel] = useState({
     isShown: false,
@@ -85,28 +82,9 @@ function NotesMain() {
     }
   }
 
-
-  // const [userInfo, setUserInfo] = useState(null);
-
-  const navigate = useNavigate();
-
-  // Get User Info
-  // const getUserInfo = async () => {
-  //     try {
-  //         const response = await axiosInstance.get("/get-user");
-  //         if(response.data && response.data.user){
-  //             setUserInfo(response.data.user);
-  //         }
-  //     } catch (error) {
-  //         if(error.response.status === 401){
-  //             localStorage.clear();
-  //             navigate("/login")
-  //         }
-  //     }
-  // };
+  // const navigate = useNavigate();
 
   useEffect(() => {
-      // getUserInfo();
       getAllNotes();
 
     return () => {}
@@ -135,19 +113,22 @@ function NotesMain() {
 
 
   // Search Note
+  const [searchQuery, setSearchQuery] = useState("");
   const [isSearch, setIsSearch] = useState(false);
+
   const handleSearch = () => {
     if(searchQuery){
-      setSearchQuery(searchQuery);
+      onSearchNote(searchQuery);
     }
   };
 
   const onClearSearch = () => {
     setSearchQuery("");
   };
+
   const onSearchNote = async (query) => {
     try {
-      const response = await axiosInstance.get("/search-notes/", {
+      const response = await axiosInstance.get("/search-notes", {
         params : {query},
       });
 
@@ -158,13 +139,7 @@ function NotesMain() {
 
     } catch (error) {
       console.error(error);
-      
     }
-  }
-
-  const handleClearSearch = () => {
-    setIsSearch(false);
-    getAllNotes();
   }
 
 
@@ -172,6 +147,7 @@ function NotesMain() {
     <>
       <div className="h-72 p-20 flex items-center justify-center ">
         <div className="h-20 flex items-center justify-center">
+          
           <SearchBar
             value={searchQuery}
             onChange={({ target }) => {
@@ -179,45 +155,49 @@ function NotesMain() {
             }}
             handleSearch={handleSearch}
             onClearSearch={onClearSearch}
-            onSearchNote={onSearchNote}
-            handleClearSearch={handleClearSearch}
+            // onSearchNote={onSearchNote}
+            // handleClearSearch={handleClearSearch}
           />
+
         </div>
       </div>
 
       <div className="p-28">
-        {allNotes.length > 0 ? (<div
-          className="container w-[80%] mx-auto p-28 columns-2 lg:columns-4 md:columns-3 sm:columns-2 gap-x-3 lg:gap-x-6 md:gap-x-5 sm:gap-x-4"
-          // style={{ minHeight: "calc(100vh - 19vh)" }}
-        >
-          {allNotes.map((item, index) => (
-            <SingleNoteCard
-              key={item._id}
-              title={item.title}
-              date={item.createdOn}
-              content={item.content}
-              tags={item.tags}
-              isPinned={item.isPinned}
-              onEdit={() => handleEdit(item)}
-              onDelete={() => deleteNote(item)}
-              onPinNote={() => updateIsPinned(item)}
-            />
-          ))}
-        </div>) : (
-          <div className="h-full">
-            <EmptyCard/>
+        {allNotes.length > 0 ? (
+          <div
+            className="container w-[80%] mx-auto p-28 columns-2 lg:columns-4 md:columns-3 sm:columns-2 gap-x-3 lg:gap-x-6 md:gap-x-5 sm:gap-x-4"
+            // style={{ minHeight: "calc(100vh - 19vh)" }}
+          >
+            {allNotes.map((item, index) => (
+              <SingleNoteCard
+                key={item._id}
+                title={item.title}
+                date={item.createdOn}
+                content={item.content}
+                tags={item.tags}
+                isPinned={item.isPinned}
+                onEdit={() => handleEdit(item)}
+                onDelete={() => deleteNote(item)}
+                onPinNote={() => updateIsPinned(item)}
+              />
+            ))}
           </div>
-        ) }
-
-
+        ) : (
+          <div className="h-full">
+            <EmptyCard />
+          </div>
+        )}
       </div>
 
       <div className="plusIcon bg-black w-16 h-16 rounded-xl fixed right-8 bottom-8 sm:right-16 sm:bottom-16 flex justify-center items-center text-5xl shadow-2xl shadow-slate-500 z-50">
-
-        <button className="text-white" onClick={() => {
-          setOpenAddEditModel({ isShown: true, type: "add", data: null });
-        }}>+</button>
-
+        <button
+          className="text-white"
+          onClick={() => {
+            setOpenAddEditModel({ isShown: true, type: "add", data: null });
+          }}
+        >
+          +
+        </button>
       </div>
 
       <Modal

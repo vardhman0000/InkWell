@@ -3,7 +3,7 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { IoMdClose } from 'react-icons/io'
 
 
-function SearchBar({value, onChange, handleSearch, onClearSearch, onSearchNote, handleClearSearch}) {
+function SearchBar({value, onChange, handleSearch, onClearSearch}) {
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -33,4 +33,4 @@ function SearchBar({value, onChange, handleSearch, onClearSearch, onSearchNote, 
   )
 }
 
-export default SearchBar
+export default SearchBar;

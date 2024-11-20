@@ -355,7 +355,7 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req,res) => {
 });
 
 // Search notes
-app.get("/search-notes/", authenticateToken, async (req,res) => { 
+app.get("/search-notes", authenticateToken, async (req,res) => { 
     const {user}  = req.user;
     const {query} = req.query;
 
