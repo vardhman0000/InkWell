@@ -19,7 +19,7 @@ function SearchBar({value, onChange, handleSearch, onClearSearch}) {
           className='w-96 h-10 bg-transparent text-xs py-[11px] outline-none'
           value={value}
           onChange={onChange} 
-          onKeyPress={handleKeyPress}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}  
         />
 
         {value && (

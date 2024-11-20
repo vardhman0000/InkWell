@@ -126,7 +126,10 @@ function NotesMain() {
     setSearchQuery("");
   };
 
+
+  // API Request
   const onSearchNote = async (query) => {
+    
     try {
       const response = await axiosInstance.get("/search-notes", {
         params : {query},
@@ -136,6 +139,14 @@ function NotesMain() {
         setIsSearch(true);
         setAllNotes(response.data.notes);
       }
+      if (response.data.notes.length === 0) {
+        setAllNotes([]);
+        setIsSearch(false);
+        // return;
+      }
+
+      console.log("Search query:", query);
+      console.log("Response:", response.data);
 
     } catch (error) {
       console.error(error);
@@ -150,9 +161,7 @@ function NotesMain() {
           
           <SearchBar
             value={searchQuery}
-            onChange={({ target }) => {
-              setSearchQuery(target.value);
-            }}
+            onChange={(e) => setSearchQuery(e.target.value)}
             handleSearch={handleSearch}
             onClearSearch={onClearSearch}
             // onSearchNote={onSearchNote}
