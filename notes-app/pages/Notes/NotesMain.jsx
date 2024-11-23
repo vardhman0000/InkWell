@@ -134,30 +134,40 @@ function NotesMain() {
 
 
   // API Request
-  const onSearchNote = async (query) => {
-    
-    try {
-      const response = await axiosInstance.get("/search-notes", {
-        params : {query},
-      });
+const onSearchNote = async (query) => {
+  
+  try {
+    const response = await axiosInstance.get("/search-notes", {
+      params : {query},
+    });
 
-      if(response.data && response.data.notes){
-        setIsSearch(true);
-        setAllNotes(response.data.notes);
-      }
-      if (response.data.notes.length === 0) {
-        setAllNotes([]);
-        setIsSearch(false);
-        // return;
-      }
-
-      console.log("Search query:", query);
-      console.log("Response:", response.data);
-
-    } catch (error) {
-      console.error(error);
+    if(response.data && response.data.notes){
+      setIsSearch(true);
+      setAllNotes(response.data.notes);
     }
+    if (response.data.notes.length === 0) {
+      setAllNotes([]);
+      setIsSearch(false);
+      // return;
+    }
+
+    console.log("Search query:", query);
+    console.log("Response:", response.data);
+
+  } catch (error) {
+    console.error(error);
   }
+}
+
+// Instant Search with useEffect
+useEffect(() => {
+  if (searchQuery.trim() === "") {
+    setIsSearch(false);
+    getAllNotes(); // Fetch all notes when search is cleared
+  } else {
+    onSearchNote(searchQuery); // Fetch search results
+  }
+}, [searchQuery]); // Run whenever `searchQuery` changes
 
 
   return (
